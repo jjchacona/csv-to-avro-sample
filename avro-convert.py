@@ -15,15 +15,15 @@ def utf_8_encoder(unicode_csv_data):
     for line in unicode_csv_data:
         yield line.encode('utf-8')
 
-schema = avro.schema.parse(open("data/song.avsc").read())
+schema = avro.schema.parse(open("movies_final.avsc").read())
 
-with codecs.open('data/subset_unique_tracks.txt', 'r', encoding='latin_1') as csvfile:
-	reader = unicode_csv_reader(csvfile, delimiter='|')
-	writer = DataFileWriter(open("data/songs.avro", "w"), DatumWriter(), schema, codec='deflate')
+with codecs.open('data_0_0_0.csv', 'r', encoding='latin_1') as csvfile:
+	reader = unicode_csv_reader(csvfile, delimiter=',')
+	writer = DataFileWriter(open("movies_demo.avro", "w"), DatumWriter(), schema, codec='deflate')
 	for count, row in enumerate(reader):
 		print count
 		try:
-			writer.append({"id1": row[0], "id2": row[1], "artist": row[2], "song": row[3]})
+			writer.append({"title": row[0], "year": row[1], "cast_": row[2], "genre": row[3]})
 		except IndexError:
 			print "Bad record, skip."
 	writer.close()
