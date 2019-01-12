@@ -23,6 +23,8 @@ with codecs.open('data_0_0_0.csv', 'r', encoding='latin_1') as csvfile:
 	for count, row in enumerate(reader):
 		print count
 		try:
+			writer.row[2].replace('\,',',')
+			writer.row[3].replace('\,',',')
 			writer.append({"title": row[0], "year": row[1], "cast_": row[2], "genres": row[3]})
 		except IndexError:
 			print "Bad record, skip."
